@@ -11,8 +11,8 @@ import string
 import classes
 from classes import Triangle, Square, Circle, Skew, Alpha, Brightness, Saturation, Hue, Y, Z, Rotate, Flip, X, \
     Transform, ShapeDef, NonTerminal, Shape, Program, RuleCall, Modifier, SimpleShape
-
-
+from process.Aesmethod import Am_BZ, Am_S
+from process.NSGA2 import fast_non_dominated_sort, crowding_distance_assignment
 
 
 def pickPartner(rule, p1, p2):  # 随机选取交叉对象shapedef
@@ -112,7 +112,7 @@ def mutation(crosschildren,kind): # 发生变异
             if not isinstance(p, SimpleShape):
                 newshape.append(p)
             else:
-                print(p)
+                # print(p)
                 newshape.append(mutateSimpleShape(p))
         crosschildren = newshape
 
@@ -223,11 +223,11 @@ def Tournament_Selection(arr):
     for x in range(int(length/2)):
         opp = length-x-1
         result = Tournament(arr, x, opp)
-        arr[result[0]].setRank(1)  # 存活
-        arr[result[1]].setRank(0)  # 去世
+        arr[result[0]].setWin(1)  # 存活
+        arr[result[1]].setWin(0)  # 去世
 
     for i in range(length):
-        if arr[i].rank == 1:
+        if arr[i].win == 1:
             parentarr.append(arr[i])
 
     for i in range(len(arr)):
@@ -240,50 +240,78 @@ def Tournament_Selection(arr):
 
 
 
-#
-def programreproduce(arr):
-
-    trr = []
-    trr.append(arr[0])
-    trr.append(arr[1])
-    for i in range(8):
-        child = newprogram(arr[0], arr[1])
-        trr.append(child)
-    arr.clear()
-    arr = trr
 
 
+# 获取适应度函数值 （经过归一化处理）
+def getFitness(arr):
 
-# 适应度值 自动
-def fitness(program):
-    # new fitness:
+    l = len(arr)
+    fitness = [([0.0] * 2) for i in range(l)]
+    for i in range(l):
+        fitness[i][0] = Am_BZ(i, arr[i])
+        fitness[i][1] = Am_S(i)
+    return fitness
 
-    # want to determine the size of the program
-    # num = len(program.shapes)
-    # sum = 0
-    # total = 0
-    # for i in range (num):
-    # 	children = program.shapes[i].children   #shapedefs
-    # 	for j in range(len(children)):
-    # 		sum += len(program.shapes[i].children[j].children) # children of a shapedef: shapes: rules or simpleshapes
-    # 		total += 1
+# 按照拥挤度为F中的层级元素排序
 
-    # avg = sum/total
-    # return avg  # number of things within rule
+def bubbleSort(arr, d):
+    n = len(arr)
 
-    # old fitness:
-    return len(program.shapes)  # num nonterminals
+    # 遍历所有数组元素
+    for i in range(n):
+
+        for j in range(0, n - i - 1):
+
+            if d[arr[j]] < d[arr[j + 1]]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
 
 
-# 按照适应度以及一点点运气排序
+# 自动繁衍过程
+def autoprocess(arr):
 
-# 保留适应度前十的图形
+    l = len(arr)
+    fitness = getFitness(arr)
+    F, rank = fast_non_dominated_sort(fitness, l) # rank[i] i所处的阶层 F[i]:第i层的元素下标集合
+    distance = crowding_distance_assignment(fitness, l, F) # 下标为i的程序的拥挤度
+
+    for i in range(len(F)):
+        F[i] = bubbleSort(F[i], distance)
+
+    # 淘汰3/4的种群，剩下的亲本随机生出的后代补充种群
+    # 为了加快速度，本次实验采取种群数20 若修改种群数量需要调整代码
+    parentarr = [] # 本世代存活个体
+    select = len(arr) // 4 # 可以进行繁殖的数量
+    al = 0
+    for i in range(len(F)):
+
+        for j in F[i]:
+
+            if al >= select:
+                break
+            parentarr.append(arr[j])
+            al += 1
+
+        if al == select:
+            break
+
+    childarr = [] # 需要15个子代，平均每个亲代繁衍3个子代
+
+    for p in parentarr:
+        other = random.sample(parentarr, 3) # 接受和自己繁衍，因为会有变异
+        for op in other:
+            childarr.append(newprogram(p, op))
+
+    return parentarr + childarr
+
+
+
+
+    # 保留适应度前十的图形
 def trimarr(programarr):
     programarr.sort()
     return programarr[0:10]
 
-
-#
 
 
 #  获取平均适应度

@@ -5,8 +5,7 @@ import random
 
 class Program:  # has startshape, which shapeDef, and a dictionary of nodes
     def __str__(self):
-        return """
-startshape {startshape}
+        return """startshape {startshape}
 CF::MinimumSize = 0.3
 CF::MaxShapes = 100000
 
@@ -20,7 +19,7 @@ CF::MaxShapes = 100000
 
     def __init__(self, startshape, shapes):  # 输入str 保存为dictionary
         self.fitness = 1.0
-        self.rank = 1 # 默认存活
+        self.win = 1 # 默认存活
         self.shapes = shapes  # 字典格式
         self.startshape = self.findNT(startshape)
         if self.startshape == None:
@@ -41,10 +40,10 @@ CF::MaxShapes = 100000
     def getFit(self):
         return self.fitness
 
-    def setRank(self, rank):
+    def setWin(self, rank):
         self.rank = rank
 
-    def getRank(self):
+    def getWin(self):
         return self.rank
 
 class NonTerminal:

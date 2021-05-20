@@ -2,28 +2,27 @@ import cv2
 
 from process.Kolmogorov import Kolmogorov
 from process.entropy import get_entropy
-from process.functions import createImage, newprogram, programreproduce, programbreed, avgFitness, fitness, trimarr, \
-    population
-from process.input import openfile
-from PIL import Image
 
 
-# Aesthetic measure BZ = Hp/K
-def Am_BZ(filename):
 
-    src = cv2.imread(filename + ".png")
+# Aesthetic measure BZ = Hp/K high：形状更复杂代码更简洁
+def Am_BZ(num, p):
+
+    src = cv2.imread("output/image" + str(num) + ".png")
     grayImage = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
     Hp = get_entropy(grayImage)
+    # print(Hp)
 
-    K = Kolmogorov(filename + ".cfdg")
+    K = Kolmogorov(p)
+    # print(K)
 
-    return Hp/K
+    return (Hp/K) * 1000 # 归一化处理？
 
 
-# Aesthetic measure S = (Hp1+Hp2+Hp3+Hp4)/4Hp
-def Am_S(filename):
+# Aesthetic measure S = (Hp1+Hp2+Hp3+Hp4)/4Hp high：形状更均匀
+def Am_S(num):
 
-    src = cv2.imread(filename + ".png")
+    src = cv2.imread("output/image" + str(num) + ".png")
     # 图像灰度化处理
     grayImage = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
     shape = grayImage.shape

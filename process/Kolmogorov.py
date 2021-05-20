@@ -5,6 +5,7 @@ import sys
 
 
 # 数据初始化
+from process.input import openfile
 
 node_dict = {}  # 建立原始数据与编码节点的映射，便于稍后输出数据的编码
 count_dict = {}
@@ -53,23 +54,23 @@ def encode(echo):
         ec_dict[x] = node.encode(node_dict[x])
 
 
-# 压缩操作
-def encodefile(inputfile):
+# 压缩代码
+def encodestr(p):
 
-    f = open(inputfile, "rb")
+    f = str(p).replace("\n", "").replace(" ", "")
+
+    f = f.encode('utf-8')
     bytes_width = 1  # 每次读取的字节宽度
     i = 0
-
-    f.seek(0, 2)
-    count = f.tell() / bytes_width
+    f = f[2:]
+    count = len(f) / bytes_width
     # print(count)
     nodes = []  # 结点列表，用于构建哈夫曼树
     buff = [b''] * int(count)
-    f.seek(0)
 
     # 计算字符频率,并将单个字符构建成单一节点
     while i < count:
-        buff[i] = f.read(bytes_width)
+        buff[i] = f[i]
         if count_dict.get(buff[i], -1) == -1:
             count_dict[buff[i]] = 0
         count_dict[buff[i]] = count_dict[buff[i]] + 1
@@ -80,7 +81,6 @@ def encodefile(inputfile):
         node_dict[x] = node(count_dict[x])
         nodes.append(node_dict[x])
 
-    f.close()
     tree = build_tree(nodes)  # 哈夫曼树构建
     encode(False)  # 构建编码表
 
@@ -123,8 +123,8 @@ def encodefile(inputfile):
     return len(condense)
 
 
-# 用压缩后的二进制文件长度来代表程序的柯氏复杂度
-def Kolmogorov(file):
+# 用压缩后的代码长度来代表程序的柯氏复杂度
+def Kolmogorov(program):
 
-    return encodefile(file)
+    return encodestr(program)
 

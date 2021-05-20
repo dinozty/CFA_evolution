@@ -1,36 +1,36 @@
-from process.functions import createImage, newprogram, programreproduce, programbreed, avgFitness, fitness, trimarr
+from process.Aesmethod import Am_BZ, Am_S
+from process.functions import createImage, newprogram,  programbreed, avgFitness,  trimarr, \
+    population
 from process.input import openfile
 from PIL import Image
 
-p1 = openfile("p1.txt")
+p1 = openfile("output/code9.cfdg")
 
-p2 = openfile("p2.txt")
-
-programarr = [p1, p2]
-
-
-'''''''''''
-# 进化代数 100 交互次数 1，10，20，30，40，50，60，70，80，90
-manselect = [0, 9, 19, 29, 39, 49, 59, 69, 79, 89]
-for i in range(10):
-
-    programreproduce(programarr)             # pick parents here
-    # currently only doing one generation, can increase second param to however many generations wanted
-    programarr = trimarr(programarr)
-    if i in manselect:
-        print(len(programarr))
-        for j in range(len(programarr)):
-            # createImage(str(programarr[j]), ("code" + str(i) + " " + str(j)), ("result" + str(i) + " " + str(j)))
-            # img = Image.open("output/" + "result" + str(i) + " " + str(j) + ".png")
-            # img.show()
-            fit = float(input("该图片的评分为:"))
-            # img.close()
-            programarr[j].setFit(fit)
-
-for j in range(len(programarr)):
-    createImage(str(programarr[j]), ("code" + str(i) + " " + str(j)), ("result" + str(i) + " " + str(j)))
-    # img = Image.open("output/" + "result" + str(i) + " " + str(j) + ".png")
-    # img.show()
-
+# p2 = openfile("p2.cfdg")
 
 '''''''''
+arr = population(p1, p2, 10)
+programbreed(arr, 10)
+
+for i in range(len(arr)):
+    createImage(str(arr[i]), "code" + str(i), "image" + str(i))
+'''''''''
+# print(Am_BZ(9, p1) * 1000)
+# print(Am_S(9))
+
+
+def bubbleSort(arr, d):
+    n = len(arr)
+
+    # 遍历所有数组元素
+    for i in range(n):
+
+        for j in range(0, n - i - 1):
+
+            if d[arr[j]] < d[arr[j + 1]]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+d = [1,2,3,4,5]
+arr = [1,2,3]
+print(bubbleSort(arr, d))

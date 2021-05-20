@@ -114,14 +114,14 @@ def openfile(file):
 
     with open(file, "r") as f:  # 打开文件
         f = f.readlines()
-        opens = f[0].split()
+        # opens = f[0].split()
         flag = 0
         atomshapes = []  # rule xx{}
         shapes = []  # shape xx {} 所有rules，一个nt中有一个
         atomshapes.clear()
         shapes.clear()
 
-        for line in reversed(f[1:]):
+        for line in reversed(f):
 
             line.strip()
             # print(line) #
