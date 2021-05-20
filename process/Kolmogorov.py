@@ -62,7 +62,7 @@ def encodefile(inputfile):
 
     f.seek(0, 2)
     count = f.tell() / bytes_width
-    print(count)
+    # print(count)
     nodes = []  # 结点列表，用于构建哈夫曼树
     buff = [b''] * int(count)
     f.seek(0)
@@ -113,7 +113,6 @@ def encodefile(inputfile):
                 raw = 0b1
                 tem = int(i / len(buff) * 100)
                 if tem > last:
-                    print("encode:", tem, '%')  # 输出压缩进度
                     last = tem
         i = i + 1
 
@@ -124,7 +123,7 @@ def encodefile(inputfile):
     return len(condense)
 
 
-# 用压缩后的二进制
+# 用压缩后的二进制文件长度来代表程序的柯氏复杂度
 def Kolmogorov(file):
 
     return encodefile(file)
