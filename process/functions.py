@@ -335,11 +335,25 @@ def population(p1, p2, large):
 
 
 # 进行迭代
-def programbreed(programarr, num): # 列表 范围 迭代数
+def programbreed1(programarr, num): # 列表 范围 迭代数
 
-        for i in range(num):
-            programarr = Tournament_Selection(programarr)
+    for i in range(num):
+        programarr = Tournament_Selection(programarr)
 
+def programbreed2(programarr, num):
+
+    for i in range(num):
+
+        make_file(programarr)
+        programarr = autoprocess(programarr)
+
+    make_file(programarr)
+
+
+def make_file(arr): # 生成文件和图片
+
+    for i in range(len(arr)):
+        createImage(str(arr[i]), "code" + str(i), "image" + str(i))
 
 
 # 产生文件和图像
