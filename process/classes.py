@@ -40,11 +40,11 @@ CF::MaxShapes = 100000
     def getFit(self):
         return self.fitness
 
-    def setWin(self, rank):
-        self.rank = rank
+    def setWin(self, win):
+        self.win = win
 
     def getWin(self):
-        return self.rank
+        return self.win
 
 class NonTerminal:
     def __str__(self):

@@ -13,6 +13,7 @@ from classes import Triangle, Square, Circle, Skew, Alpha, Brightness, Saturatio
     Transform, ShapeDef, NonTerminal, Shape, Program, RuleCall, Modifier, SimpleShape
 from process.Aesmethod import Am_BZ, Am_S
 from process.NSGA2 import fast_non_dominated_sort, crowding_distance_assignment
+from process.selectUI import pic_select
 
 
 def pickPartner(rule, p1, p2):  # 随机选取交叉对象shapedef
@@ -195,13 +196,6 @@ def newprogram(p1, p2):
 
 
 
-def Tournament(arr, p1, p2):
-
-    # check = int(input("请您挑出更好的一张：前者（1）or后者（2）"))
-    check = 1  # 暂时测试
-    if check == 1:
-        return [p1, p2]
-    return [p2, p1]
 
 # 随机从其他优胜者中挑选另一个亲本
 def select_p2(arr, x):
@@ -220,20 +214,20 @@ def Tournament_Selection(arr):
     childarr = []
     parentarr = []
     random.shuffle(arr)
-    for x in range(int(length/2)):
-        opp = length-x-1
-        result = Tournament(arr, x, opp)
-        arr[result[0]].setWin(1)  # 存活
-        arr[result[1]].setWin(0)  # 去世
+
+    result = pic_select()  # 大小为10
+    # print(result)
+    for i in range(len(result)):  # 默认种群数量10，更改需要修改界面代码
+        arr[i].setWin(result[i])  # 存活与否
 
     for i in range(length):
         if arr[i].win == 1:
             parentarr.append(arr[i])
 
-    for i in range(len(arr)):
+    for i in range(len(parentarr)):
 
-        p2 = select_p2(arr, i)
-        newp = newprogram(arr[i], arr[p2])
+        p2 = select_p2(parentarr, i)
+        newp = newprogram(parentarr[i], parentarr[p2])
         childarr.append(newp)
 
     return parentarr + childarr
@@ -241,8 +235,7 @@ def Tournament_Selection(arr):
 
 
 
-
-# 获取适应度函数值 （经过归一化处理）
+# 获取适应度函数值 （经过归一化处理? 实际上未实现）
 def getFitness(arr):
 
     l = len(arr)
@@ -338,7 +331,11 @@ def population(p1, p2, large):
 def programbreed1(programarr, num): # 列表 范围 迭代数
 
     for i in range(num):
+
+        make_file(programarr)
         programarr = Tournament_Selection(programarr)
+
+    make_file(programarr)
 
 def programbreed2(programarr, num):
 
