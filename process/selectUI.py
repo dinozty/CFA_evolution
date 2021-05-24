@@ -6,7 +6,6 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QButtonGroup, QPushButton, QRadioButton, QLabel
 
 
-
 ar = [0] * 10
 
 
@@ -120,7 +119,6 @@ def A():
 def pic_select():
     A()
     return ar
-
 
 
 

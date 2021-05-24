@@ -1,5 +1,3 @@
-
-
 # NSGA-II 算法
 
 import numpy as np
@@ -97,12 +95,4 @@ def crowding_distance_assignment(fitness, num, F):
 
 
 
-'''''''''
-fitness = [[0, 4], [1, 3], [2, 2], [3, 1]]
-F, rank = fast_non_dominated_sort(fitness, 4)
-dis = crowding_distance_assignment(fitness, 4, F)
-
-print(dis)
-
-'''''''''
 
