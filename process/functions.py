@@ -41,7 +41,7 @@ def slicechildren(children, numparts):  # 生成numparts长度的列表，每个
     return toReturn
 
 
-# increase or decrease by a percent - not always good for multiple generations
+# 改变参数大小
 def mutateParamVal(param):
 
     param = float(param)
@@ -68,8 +68,6 @@ def mutateSimpleShape(shape):
         return shape
 
 
-
-
 # 交叉： 随机选择双亲nt的shapedef进行组合 返回一连串shapedef
 def crossSequences(s1, s2):
     splits = [3, 4, 5, 8, 34]
@@ -89,8 +87,6 @@ def crossSequences(s1, s2):
             attributes.extend(p2arr[i])
 
     return attributes
-
-
 
 
 def mutation(crosschildren,kind): # 发生变异
@@ -140,7 +136,6 @@ def crossShapeDef(rule, partner, p1, p2):  # add extra rule - more complexity
     return ShapeDef(None, crosschildren, weight)
 
 
-
 # 检测并添加引用但没有包含的图形定义
 def flattenNT(nt, soFar=None):
     if soFar == None:
@@ -155,7 +150,6 @@ def flattenNT(nt, soFar=None):
                     soFar.add(shape.rule)
                     result.extend(flattenNT(shape.rule, soFar))
     return result
-
 
 
 # 对nt进行交叉
@@ -193,8 +187,6 @@ def newprogram(p1, p2):
 
     result = crossNT(p1.startshape, p2.startshape, p1, p2) # 返回一堆nt [{}]
     return Program(result[0].name, result)
-
-
 
 
 # 随机从其他优胜者中挑选另一个亲本
@@ -298,13 +290,10 @@ def autoprocess(arr):
     return parentarr + childarr
 
 
-
-
     # 保留适应度前十的图形
 def trimarr(programarr):
     programarr.sort()
     return programarr[0:10]
-
 
 
 #  获取平均适应度
@@ -326,7 +315,6 @@ def population(p1, p2, large):
     return arr
 
 
-
 # 进行迭代
 def programbreed1(programarr, num): # 列表 范围 迭代数
 
@@ -336,6 +324,7 @@ def programbreed1(programarr, num): # 列表 范围 迭代数
         programarr = Tournament_Selection(programarr)
 
     make_file(programarr)
+
 
 def programbreed2(programarr, num):
 
