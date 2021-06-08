@@ -1,0 +1,48 @@
+startshape START
+CF::MinimumSize = 0.3
+CF::MaxShapes = 100000
+
+shape START
+rule 2.0{
+CURVE []
+START [s 1.0 r 20.0999 b 0.01 h 0.1005 sat 0.8152] 
+ } 
+
+rule 98.0{
+CURVE []
+START [s 1.0 r 20.0999 b 0.01 h 0.1005 sat 0.8152] 
+ } 
+
+shape CURVE
+rule 1{
+SQUARE []
+CURVE [y 1.0 s 0.998 r 5.0] 
+ } 
+
+rule 0.007{
+CIRCLE [s 3.507 b 0.5025]
+CURVE [y 1.0 s 0.995 r 10.04] 
+ } 
+
+rule 0.01{
+FLOWER []
+SQUARE []
+CURVE [y 1.0 s 0.992 r -39.8801 skew 10.04 0.0] 
+ } 
+
+shape FLOWER
+rule 1{
+TRIANGLE [s 15.045 1.004 r 44.91]
+FLOWER [s 0.9018 r 44.8651] 
+ } 
+
+shape START
+rule 1{
+CURVE []
+START [s 1.0 r 20.0999 b 0.01 h 0.1005 sat 0.8152] 
+ } 
+
+rule 1{
+CURVE []
+START [s 1.0 r 20.0999 b 0.01 h 0.1005 sat 0.8152] 
+ } 

@@ -1,0 +1,66 @@
+startshape START
+CF::MinimumSize = 0.3
+CF::MaxShapes = 100000
+
+shape START
+rule 2.0{
+CIRCLE []
+START [s 0.999 r 20.0398 b 0.01 h 0.1005 sat 0.8128] 
+ } 
+
+rule 2.0{
+CIRCLE []
+CIRCLE [s 0.9036 b 1.006]
+ARM [y 0.2006 s 0.993 f 90.0895]
+ARM [y 0.2012 s 0.5988 b 0.2006] 
+ } 
+
+shape START
+rule 1{
+CURVE []
+START [s 0.999 r 20.0398 b 0.01 h 0.1005 sat 0.8128] 
+ } 
+
+rule 1{
+CURVE []
+START [s 0.999 r 20.0398 b 0.01 h 0.1005 sat 0.8128] 
+ } 
+
+shape CURVE
+rule 1{
+SQUARE []
+CURVE [y 1.001 s 0.998 r 5.0] 
+ } 
+
+rule 0.007{
+CIRCLE [s 3.507 b 0.501]
+CURVE [y 1.0 s 0.994 r 10.04] 
+ } 
+
+rule 0.01{
+FLOWER []
+SQUARE []
+CURVE [y 1.001 s 0.991 r -40.0 skew 10.01 0.0] 
+ } 
+
+shape FLOWER
+rule 1{
+TRIANGLE [s 15.045 1.003 r 44.955]
+FLOWER [s 0.9018 r 44.955] 
+ } 
+
+shape ARM
+rule 98.0{
+CIRCLE []
+CIRCLE [s 0.9018 b 1.003]
+ARM [y 0.2004 s 0.993 r 3.003] 
+ } 
+
+rule 2.0{
+CIRCLE []
+CIRCLE [s 0.9036 b 1.006]
+ARM [y 0.2006 s 0.993 f 90.0895]
+ARM [y 0.2012 s 0.5988 b 0.2006] 
+ } 
+
+		

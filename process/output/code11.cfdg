@@ -1,0 +1,72 @@
+startshape SUN
+CF::MinimumSize = 0.3
+CF::MaxShapes = 100000
+
+shape SUN
+rule 1{
+CORD []
+SUN [x 0.999 r 60.1196 h 3.03 sat -0.1908 s 1.002 b 0.0998] 
+ } 
+
+rule 1{
+CORD []
+START [s 0.997 r 20.02 b 0.01 h 0.1 sat 0.7992] 
+ } 
+
+rule 1{
+CIRCLE [sat 0.999 h 270.5397]
+CORD [y 1.003 r 60.0999 s 0.981] 
+ } 
+
+shape CORD
+rule 1{
+CIRCLE [sat 0.999 h 270.5397]
+CORD [y 1.003 r 60.0999 s 0.981] 
+ } 
+
+shape SUN
+rule 1{
+CORD []
+SUN [x 0.999 r 60.1196 h 3.03 sat -0.1908 s 1.002 b 0.0998] 
+ } 
+
+rule 1{
+CORD []
+SUN [x 0.999 r 60.1196 h 3.03 sat -0.1908 s 1.002 b 0.0998] 
+ } 
+
+shape START
+rule 1{
+CURVE []
+START [s 0.997 r 20.02 b 0.01 h 0.1 sat 0.7992] 
+ } 
+
+rule 1{
+CURVE []
+START [s 0.997 r 20.02 b 0.01 h 0.1 sat 0.7992] 
+ } 
+
+shape CURVE
+rule 1{
+SQUARE []
+CURVE [y 1.0 s 0.997 r 5.0] 
+ } 
+
+rule 0.007{
+CIRCLE [s 3.5 b 0.5]
+CURVE [y 1.0 s 0.99 r 10.0] 
+ } 
+
+rule 0.01{
+FLOWER []
+SQUARE []
+CURVE [y 1.0 s 0.99 r -40.0 skew 10.0 0.0] 
+ } 
+
+shape FLOWER
+rule 1{
+TRIANGLE [s 15.0 1.0 r 45.0]
+FLOWER [s 0.9 r 45.0] 
+ } 
+
+		

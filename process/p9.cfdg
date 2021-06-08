@@ -1,0 +1,29 @@
+startshape box
+
+shape box
+
+rule 20 {
+    SQUARE [ ]
+    box [ s 0.99 r 3 y 0.8 ]
+}
+rule 8 {
+    SQUARE [ ]
+    box [ s 0.99 r 3 y 0.8 flip 90 ]
+}
+rule 1{
+    SQUARE [ ]
+    box [s 0.5 r 10 y 0.8 b 0.07 z -0.07]
+    box [ s 0.99 y 0.8 ]
+    box [s 0.6 flip 90 r 10 y 0.8 b 0.07 z -0.07]
+}
+rule 1{
+    SQUARE [ ]
+    box [s 0.5 r 10 y 0.8 b 0.07 z -0.07]
+    box [ s 0.99 y 0.8 flip 90 ]
+    box [s 0.5 flip 90 r 10 y 0.8 b 0.07 z -0.07]
+}
+rule 3 {
+    SQUARE [ ]
+    box [s 0.8 r 10 y 0.8 b 0.015 z -0.015]
+    box [s 0.8 flip 90 r 10 y 0.8 b .015 z -0.015]
+}
