@@ -25,7 +25,7 @@ def pickPartner(rule, p1, p2):  # 随机选取交叉对象shapedef
     return random.choice(ran.children) # 返回另一个程序中的随机一个shapedef
 
 
-def slicechildren(children, numparts):  # 生成numparts长度的列表，每个元素放入[shapedef]，方便交叉
+def slicechildren(children, numparts):  # 生成numparts长度的列表，每个元素放入[shapedef] 或者 {shape}，方便交叉
 
     toReturn = [None] * numparts
     size = int(math.ceil(len(children) / numparts))
@@ -46,10 +46,10 @@ def mutateParamVal(param):
 
     param = float(param)
     ran = random.uniform(0, 99)
-    if ran > 90:
-        return param * 1.001
+    if ran > 80:
+        return round((param * 1.001), 4)
     if ran < 10:
-        return param * 0.999
+        return round((param * 0.999), 4)
     else:
         return param
 
@@ -58,7 +58,7 @@ def mutateSimpleShape(shape):
 
     ran = random.uniform(0, 99)
 
-    if ran > 1:
+    if ran > 60:
         nshape = random.choice([Square(shape.children), Circle(shape.children), Triangle(shape.children)])
         if nshape.name == shape.name:
             return mutateSimpleShape(shape)
@@ -166,8 +166,8 @@ def crossNT(nt1, nt2, p1, p2):
 
     ran = random.uniform(0, 99)
 
-    # 50%的几率添加新rule定义
-    if ran > 50:
+    # 10%的几率添加新rule定义
+    if ran > 90:
         rule = random.choice(rules)
         partner = pickPartner(rule, p1, p2)  # a shapedef
         newShapeDef = crossShapeDef(rule, partner, p1, p2)
@@ -291,21 +291,76 @@ def autoprocess(arr):
 
 
     # 保留适应度前十的图形
+
+
 def trimarr(programarr):
     programarr.sort()
     return programarr[0:10]
 
+def ms_fitness(program):
+
+    num = len(program.shapes)
+    sum = 0
+    total = 0
+    for i in range(num):
+        children = program.shapes[i].children   #shapedefs
+        for j in range(len(children)):
+            sum += len(program.shapes[i].children[j].children) # shapedef中的内容量
+            total += 1
+    avg = sum/total # 平均内容量
+    program.setFit(avg)
+
 
 #  获取平均适应度
-def avgFitness(parr):
+def allFitness(parr):
     total = 0
     num = len(parr)
     for i in range(num):
         total += parr[i].getFit()
 
-    return total / num
+    return total
+
+def pickpro(arr, cp, allfit):
+
+    run = random.uniform(0, allfit)
+    l = len(arr)
+    tar = 0
+    if run < cp[0]:
+        tar = 0
+    else:
+        for i in range(l - 1):
+            if cp[i] <= run < cp[i + 1]:
+                tar = i
+
+    if tar >= allfit / l:
+        return arr[tar]
+    else:
+        return pickpro(arr, cp, allfit)
 
 
+
+def soloprocess(arr):
+
+    l = len(arr)
+    for i in range(l):
+        ms_fitness(arr[i])
+    allfit = allFitness(arr)
+    cp = [0.0] * l
+    cp[0] = arr[0].getFit()
+
+    for i in range(1, l):
+        cp[i] = cp[i - 1] + arr[i].getFit()
+
+    p1 = pickpro(arr, cp, allfit)
+    p2 = pickpro(arr, cp, allfit)
+
+    newp = []
+    newp.append(p1)
+    newp.append(p2)
+    for i in range(l - 2):
+        newp.append(newprogram(p1, p2))
+
+    return newp
 # 获取初代种群
 def population(p1, p2, large):
 
@@ -316,7 +371,7 @@ def population(p1, p2, large):
 
 
 # 进行迭代
-def programbreed1(programarr, num): # 列表 范围 迭代数
+def programbreed1(programarr, num): # 列表 迭代数 种群10
 
     for i in range(num):
 
@@ -326,13 +381,22 @@ def programbreed1(programarr, num): # 列表 范围 迭代数
     make_file(programarr)
 
 
-def programbreed2(programarr, num):
+def programbreed2(programarr, num): # 列表 迭代数 种群20
 
     for i in range(num):
 
         make_file(programarr)
         programarr = autoprocess(programarr)
 
+    make_file(programarr)
+
+
+def programbreed3(programarr, num): # 列表 迭代数 种群20
+
+    for i in range(num):
+
+        programarr = soloprocess(programarr)
+        print(i)
     make_file(programarr)
 
 
