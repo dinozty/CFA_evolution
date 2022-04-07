@@ -16,7 +16,7 @@ https://github.com/mtkent/SeniorProject
 
 Context Free ：https://github.com/MtnViewJohn/context-free/wiki
 
-The aesthetic measures used in this project is from:
+The aesthetic measures used in this project are from:
 
 Kevin Burns. (2015) Entropy and optimality in abstract art: an empirical test of visual aesthetics. Journal of Mathematics and the Arts 9:3-4, pages 77-90.
 
